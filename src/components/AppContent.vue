@@ -61,6 +61,8 @@
                        disabled
                        mode="decimal"
                        suffix=" $"
+                       :minFractionDigits="1"
+                       :maxFractionDigits="10"
                        :input-id="'block-' + index + '-bottom'" />
             <label :for="'block-' + index + '-middle'"></label>
         </div>
