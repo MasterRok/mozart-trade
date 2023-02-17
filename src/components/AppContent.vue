@@ -184,7 +184,7 @@ function onPositionAmountChange(value: number): void {
     fullTokenAmount += topTokenAmount + middleTokenAmount + bottomTokenAmount;
   });
   const averagePrice = value / fullTokenAmount;
-  maxLoss.value = Math.abs(fullTokenAmount * (stopLossPrice.value - averagePrice) * leverage.value);
+  maxLoss.value = Math.abs(fullTokenAmount * (stopLossPrice.value - averagePrice) * leverage.value) || 0;
 }
 
 </script>
