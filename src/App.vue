@@ -4,6 +4,7 @@
 
 <script lang="ts" setup>
 import AppContent from './components/AppContent.vue';
+console.log(1)
 </script>
 
 <style>

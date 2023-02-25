@@ -47,7 +47,7 @@
       <label for="positionGainBlocksAmount">Количество блоков добора</label>
     </div>
 
-    <div v-if="initialRate !== 100" class="position-gain-blocks">
+    <div v-if="initialRate !== 100" class="flex gap-5 justify-content-center flex-wrap">
       <div v-for="(block, index) in positionGainBlocks" v-bind:key="index"
            class="flex flex-column gap-2">
         <div>Блок добора {{ index + 1 }}</div>
@@ -199,17 +199,5 @@ function onPositionAmountChange(value: number): void {
 .p-divider.p-divider-horizontal {
   background-color: var(--primary-color);
   height: 1px;
-}
-
-.position-gain-blocks {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-@media screen and (max-width: 650px) {
-  .position-gain-blocks {
-    flex-wrap:wrap;
-  }
 }
 </style>
