@@ -1,14 +1,19 @@
 <template>
   <div class="flex flex-column align-items-center gap-5">
-    <div class="flex gap-3">
+    <div class="flex flex-column gap-5">
       <div class="flex align-items-center p-float-label">
-        <InputNumber v-model="initialRate" input-id="initialRate" suffix=" %" :max="100"/>
+        <InputNumber v-model="initialRate"
+                     input-id="initialRate"
+                     suffix=" %"
+                     class="w-full"
+                     :max="100"/>
         <label for="initialRate">Вход по рынку</label>
       </div>
       <div class="flex align-items-center p-float-label">
         <InputNumber v-model="initialPrice"
                      input-id="initialPrice"
                      suffix=" $"
+                     class="w-full"
                      :minFractionDigits="1"
                      :maxFractionDigits="10"/>
         <label for="initialPrice">Текущая цена</label>
@@ -17,6 +22,7 @@
         <InputNumber v-model="stopLossPrice"
                      input-id="stopLossPrice"
                      suffix=" $"
+                     class="w-full"
                      :minFractionDigits="1"
                      :maxFractionDigits="10"/>
         <label for="stopLossPrice">STOP цена</label>
@@ -41,7 +47,7 @@
       <label for="positionGainBlocksAmount">Количество блоков добора</label>
     </div>
 
-    <div v-if="initialRate !== 100" class="flex gap-3">
+    <div v-if="initialRate !== 100" class="position-gain-blocks">
       <div v-for="(block, index) in positionGainBlocks" v-bind:key="index"
            class="flex flex-column gap-2">
         <div>Блок добора {{ index + 1 }}</div>
@@ -63,8 +69,8 @@
                        suffix=" $"
                        :minFractionDigits="1"
                        :maxFractionDigits="10"
-                       :input-id="'block-' + index + '-bottom'" />
-            <label :for="'block-' + index + '-middle'"></label>
+                       :input-id="'block-' + index + '-bottom'"/>
+          <label :for="'block-' + index + '-middle'"></label>
         </div>
         <div class="flex align-items-center p-float-label mb-2">
           <InputNumber v-model="block.bottom"
@@ -90,7 +96,7 @@
       </div>
     </div>
     <Divider/>
-    <div class="flex gap-3">
+    <div class="flex gap-5 justify-content-center flex-wrap">
       <div class="flex align-items-center p-float-label">
         <InputNumber v-model="maxLoss"
                      disabled
@@ -192,6 +198,18 @@ function onPositionAmountChange(value: number): void {
 <style>
 .p-divider.p-divider-horizontal {
   background-color: var(--primary-color);
-  height: 1px
+  height: 1px;
+}
+
+.position-gain-blocks {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+@media screen and (max-width: 650px) {
+  .position-gain-blocks {
+    flex-wrap:wrap;
+  }
 }
 </style>
