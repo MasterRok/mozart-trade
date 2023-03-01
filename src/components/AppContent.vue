@@ -120,6 +120,18 @@
         <label for="positionAmount">Размер позиции</label>
       </div>
     </div>
+    <Divider/>
+    <div class="grid gap-3">
+      <template v-if="fullTokenAmount">
+        <div class="xs:col-offset-1 col-8 font-bold">Количество токенов:</div>
+        <div class="col-3">{{ fullTokenAmount }}</div>
+      </template>
+      <template v-if="averagePrice">
+        <div class="xs:col-offset-1 col-8 font-bold">Средняя цена покупки:</div>
+        <div class="col-3 ">{{ averagePrice }}</div>
+      </template>
+    </div>
+
   </div>
 </template>
 
@@ -139,6 +151,8 @@ const initialPrice = ref(0);
 const positionAmount = ref(0);
 const stopLossPrice = ref(0);
 const leverage = ref(1);
+const averagePrice = ref(0);
+const fullTokenAmount = ref(0);
 
 const positionGainBlocks = ref<GainBlock[]>([])
 const positionGainBlocksAmount = ref(0)
@@ -181,16 +195,16 @@ function recalculateBlocksRatio(): void {
 }
 
 function onPositionAmountChange(value: number): void {
-  let fullTokenAmount = value * initialRate.value / 100 / initialPrice.value;
+  fullTokenAmount.value = value * initialRate.value / 100 / initialPrice.value;
   positionGainBlocks.value.forEach((block: GainBlock) => {
     const blockOrderAmount = value * (block.ratio / 100) / 3;
     const topTokenAmount = blockOrderAmount / block.top;
     const middleTokenAmount = blockOrderAmount / block.middle;
     const bottomTokenAmount = blockOrderAmount / block.bottom;
-    fullTokenAmount += topTokenAmount + middleTokenAmount + bottomTokenAmount;
+    fullTokenAmount.value += topTokenAmount + middleTokenAmount + bottomTokenAmount;
   });
-  const averagePrice = value / fullTokenAmount;
-  maxLoss.value = Math.abs(fullTokenAmount * (stopLossPrice.value - averagePrice) * leverage.value) || 0;
+  averagePrice.value = value / fullTokenAmount.value;
+  maxLoss.value = Math.abs(fullTokenAmount.value * (stopLossPrice.value - averagePrice.value) * leverage.value) || 0;
 }
 
 </script>
